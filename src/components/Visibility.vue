@@ -1,0 +1,133 @@
+
+<template>
+  <v-row justify="center">
+    <v-dialog v-model="dialog" persistent max-width="600px">
+      <template v-slot:activator="{ on, attrs }">
+        <v-btn v-bind="attrs" v-on="on">
+          <v-icon>mdi-eye</v-icon>
+        </v-btn>
+      </template>
+      <v-card>
+        <v-card-title>
+          <span class="text-h5">Change Visibility</span>
+        </v-card-title>
+        <v-card-text>
+          <v-form class="form rounded" ref="form">
+            <v-container class="mt-0 px-0" fluid>
+              <v-radio-group v-model="radioGroup">
+                <v-radio
+                  v-for="(n, index) in radioData"
+                  :key="n"
+                  :label="n"
+                  :value="n"
+                  v-on:click="show(index)"
+                ></v-radio>
+              </v-radio-group>
+            </v-container>
+            <v-text-field
+              v-model="userData.email"
+              placeholder="Enter your friends email"
+              append-icon="mdi-email"
+              :rules="emailRule"
+              :hint="emailHint"
+              ref="email"
+              :disabled="emailStatus"
+            ></v-text-field>
+
+            <v-btn
+              class="white--text blue darken-4 py-5 px-8"
+              elevation="2"
+              @click="submit"
+              >Change Visibility</v-btn
+            >
+          </v-form>
+        </v-card-text>
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn color="blue darken-1" text @click="dialog = false">
+            Close
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
+  </v-row>
+</template>
+
+<script>
+import { emailRule } from "../validation/validation.js";
+export default {
+  name: "Home",
+
+  data() {
+    return {
+      emailStatus: true,
+      radioGroup: 1,
+      dialog: false,
+      radioData: ["Public", "Private", "Share With some"],
+      userData: {
+        email: "",
+        Status: "",
+      },
+
+      emailRule: emailRule,
+      emailHint: null,
+      usernameHint: null,
+      show1: false,
+    };
+  },
+  methods: {
+    // need to ask
+    show(n) {
+      if (n === 0) {
+        alert(n);
+        this.emailStatus = true;
+        this.userData.Status = "public";
+      } else if (n === 1) {
+        alert(n);
+        this.emailStatus = true;
+        this.userData.Status = "private";
+      } else {
+        this.userData.Status = "";
+        this.emailStatus = false;
+        alert("else");
+      }
+    },
+
+    submit() {
+      // let validate = true;
+      // if (this.$refs.form.validate()) {
+        this.dialog = false
+      alert("saved");
+      console.log(JSON.stringify(this.userData));
+      // }
+    },
+  },
+
+  mounted() {
+    // document.title = "";
+  },
+};
+</script>
+<!--
+<style scoped>
+.wrapper {
+  /* background: url("../assets/back.jpg"); */
+  background-repeat: no-repeat;
+  background-position: center;
+  overflow-y: auto;
+}
+.main {
+  width: 100vw;
+  height: 100vh;
+}
+.form {
+  background-color: rgba(255, 255, 255, 0.9);
+}
+.img-container {
+  width: 25%;
+}
+.img-container img {
+  width: 100%;
+}
+</style>
+-->

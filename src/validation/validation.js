@@ -13,9 +13,9 @@ const nameRules = [
 
 const passwordRules = [
     (value) => !!value || "Password Required.",
-    (value) => (value || "").length >= 5 || "Must contain 1 Small and Capital letter, 1 digit (Special Characters not allowed)",
+    (value) => (value || "").length >= 5 || "Must contain 1 Small and Capital letter, 1 digit ,1 special ",
     (value) => {
-        const pattern = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/;
+        const pattern = /^(?=.*\d)(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/;
         return pattern.test(value) || "Invalid Password.";
     },
 ];

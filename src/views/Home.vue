@@ -48,7 +48,7 @@
                   Muhammadalik619@gmail.com
                 </div>
                 <div>
-                  <v-btn class="d-inline px-0" text>
+                  <v-btn v-on:click="route" class="d-inline px-0" text>
                     <v-icon left>mdi-pencil</v-icon>
                     Edit
                   </v-btn>
@@ -79,5 +79,10 @@ export default {
     // SignUpLogin,
     AppBar,
   },
+  methods: {
+route(){
+    this.$router.push({ name: "UpdateProfile" });
+}
+  }
 };
 </script>

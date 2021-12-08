@@ -38,10 +38,10 @@ Purpose:  this file View/SignIn.vue is responsible for user authentication and l
       </span>
     </v-snackbar>
 
-    <p class="mt-5 font-weight-light">
+    <!-- <p class="mt-5 font-weight-light">
       Already have a shopify id?
       <router-link to="/"> Sign Up </router-link>
-    </p>
+    </p> -->
   </v-form>
 </template>
 
@@ -55,8 +55,7 @@ export default {
   data() {
     return {
       user: {
-        email: "",
-        pass: "",
+        email: ""
       },
       snackbar: false,
       text: "Invalid Credentials",
@@ -69,19 +68,10 @@ export default {
   methods: {
     submit() {
       if (this.$refs.form.validate()) {
-        const keys = Object.keys(localStorage);
-        console.log();
+        
+          this.$store.dispatch("postForgotPasswordData",this.user);
 
-        for (let key of keys) {
-          if (this.user.email === key) {
-            if (
-              this.user.pass === JSON.parse(localStorage.getItem(key)).password
-            ) {
-              localStorage.setItem("currentUser", this.user.email);
-              this.$router.push({ name: "Home" });
-            }
-          }
-        }
+
         this.snackbar = true;
       } else {
         alert("else");

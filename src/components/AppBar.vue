@@ -17,9 +17,8 @@ this file components/AppBar.vue is the main header main Navbar used in all the c
       <!-- *********************8 drop zone******************** -->
       <v-bottom-sheet :scrollable="true" v-model="sheet">
         <template v-slot:activator="{ on, attrs }">
-          <v-btn to="/Carousel" >Carousel</v-btn>
           <v-btn light text v-bind="attrs" v-on="on">
-            <h2 class="pe-4">Upload Image</h2>
+            Upload Image
             <v-icon right size="28"> mdi-cloud-upload-outline </v-icon>
           </v-btn>
         </template>
@@ -50,7 +49,7 @@ this file components/AppBar.vue is the main header main Navbar used in all the c
         <v-menu offset-y>
           <template v-slot:activator="{ on, attrs }">
             <v-btn color="black" dark v-bind="attrs" v-on="on" text>
-              <h2>Welcome</h2>
+            Welcome
               <v-icon> mdi-chevron-down </v-icon>
             </v-btn>
           </template>

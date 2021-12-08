@@ -14,3 +14,11 @@ export default {
   }),
 };
 </script>
+<style>
+
+.group {
+  display: flex;
+  flex: 1;
+  justify-content: space-between;
+}
+</style>

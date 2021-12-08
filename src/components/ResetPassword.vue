@@ -1,4 +1,6 @@
 
+
+
     <!-- 
 System: E-commerce App using Dummy Api
 Developer: Muhammad Ali
@@ -6,114 +8,59 @@ Date: Dec 3, 2021
 Organization: Programmer Force
 Purpose: This file signUp.vue is responsible to handle all user data filled in Sign up form.
  -->
+
+ 
 <template>
   <v-form class="form pa-5 rounded" ref="form">
-    <h2>Sign Up to pCloud</h2>
-    <v-spacer></v-spacer>
-    <p class="grey--text text--darken-2 font-weight-light">
-      One of the best Cloud Image plateform made for you
-    </p>
-    <v-text-field
-      append-icon="mdi-pencil-outline"
-      v-model="userData.fullName"
-      hint="minimum 3 characters"
-      :rules="nameRules"
-      placeholder="Full Name"
-    ></v-text-field>
+   
 
-    <!-- <v-text-field
-      v-model="userData.name.lastname"
-      append-icon="mdi-pencil-outline"
-      hint="minimum 3 characters"
-      :rules="nameRules"
-      placeholder="Last Name"
-    ></v-text-field> -->
+    <!-- ************************************************** -->
 
-    <!-- <v-text-field
-      v-model="userData.username"
-      append-icon="mdi-account"
-      placeholder="User Name"
-      :rules="usernameRule"
-      :hint="usernameHint"
-      ref="username"
-    ></v-text-field> -->
-
-    <v-text-field
-      v-model="userData.email"
-      placeholder="Email"
-      append-icon="mdi-email"
-      :rules="emailRule"
-      :hint="emailHint"
-      ref="email"
-    ></v-text-field>
-
-    <!-- <v-text-field
-      v-model="userData.phone"
-      placeholder="Phone No"
-      append-icon="mdi-phone-plus-outline"
-      :rules="phoneNoRule"
-      ref="phoneNo"
-    ></v-text-field> -->
-
-    <v-text-field
-      v-model="userData.password"
+        <v-text-field
+      v-model="userData.oldPassword"
       :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
       :type="show1 ? 'text' : 'password'"
-      placeholder="Password"
+      placeholder="Old Password"
       counter="8"
       :rules="passwordRules"
       @click:append="show1 = !show1"
       hint="Must contain 1 Small and Capital letter, 1 digit (Special Characters not allowed)"
+      class="mb-8"
+    ></v-text-field>
+
+
+<v-divider></v-divider>
+
+
+        <v-text-field
+      v-model="userData.newPassword"
+      :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
+      :type="show1 ? 'text' : 'password'"
+      placeholder="New Password"
+      counter="8"
+      :rules="passwordRules"
+      @click:append="show1 = !show1"
+      hint="Must contain 1 Small and Capital letter, 1 digit (Special Characters not allowed)"
+      class="mt-5"
     ></v-text-field>
 
     <v-text-field
-      v-model="userData.confirmPassword"
+      v-model="userData.confirmNewPassword"
       :append-icon="show2 ? 'mdi-eye' : 'mdi-eye-off'"
       :type="show2 ? 'text' : 'password'"
-      placeholder="Password"
+      placeholder="Confirm New Password"
       counter="8"
       :rules="passwordRules"
       @click:append="show2 = !show2"
       hint="Must contain 1 Small and Capital letter, 1 digit (Special Characters not allowed)"
     ></v-text-field>
 
-    <!-- ************************ Need to ask ******************************** -->
-    <v-file-input
-      accept="image/*"
-      label="Upload Profile Picture"
-      v-on:change="storeImg"
-      required
-      prepend-icon=""
-      append-icon="mdi-paperclip"
-    ></v-file-input>
-
-    <v-subheader>Select Age in Years:</v-subheader>
-    <v-slider
-      v-model="userData.age"
-      :min="12"
-      :max="90"
-      color="grey darken-3"
-      append-icon="mdi-account-question"
-      :thumb-size="22"
-      thumb-label="always"
-    ></v-slider>
-
-    <p class="mt-5 font-weight-light">
-      By proceeding, you agree to the
-      <a href="#">Terms and conditions</a>
-    </p>
-
     <v-btn
       class="white--text blue darken-4 pa-5 px-12"
       elevation="2"
       @click="submit"
-      >Create P-cloud Id</v-btn
+      >Reset Password</v-btn
     >
-
-    <p class="mt-5 font-weight-light">
-      Already have a pCloud id?
-      <router-link to="/SignIn"> Login </router-link>
-    </p>
 
     <!-- *****************snack bar********************** -->
     <v-snackbar top centered color="red" v-model="snackbar" timeout="2000">
@@ -135,20 +82,18 @@ import {
 // import { mapState } from "vuex";
 
 export default {
-  name: "SignUp",
+  name: "ProfileSettings",
 
   data() {
     return {
+      iconStatus: true,
       snackbar: false,
       text: "Password Does not match",
       slider: "",
       userData: {
-        fullName: "",
-        email: "",
-        password: "",
-        confirmPassword: "",
-        profilePicture: "",
-        age: "",
+        oldPassword: "",
+        newPassword: "",
+        confirmNewPassword: ""
       },
       nameRules: nameRules,
       passwordRules: passwordRules,
@@ -161,10 +106,12 @@ export default {
   methods: {
     storeImg(event) {
       let vm = this;
+      this.iconStatus = false;
       const reader = new FileReader();
       reader.addEventListener(
         "load",
         function () {
+          console.log(reader.result);
           vm.userData.profilePicture = reader.result;
         },
         false
@@ -187,7 +134,7 @@ export default {
     // ...mapState({ msg: (state) => state.SignUp.message }),
   },
   mounted() {
-    document.title = "Sign Up";
+
   },
 };
 </script>
@@ -203,9 +150,9 @@ export default {
   width: 100vw;
   height: 100vh;
 }
-.form {
+/* .form {
   background-color: rgba(0, 0, 0, 0.993) !important;
-}
+} */
 .img-container {
   width: 25%;
 }

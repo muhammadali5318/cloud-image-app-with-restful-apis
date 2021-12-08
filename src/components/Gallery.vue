@@ -1,25 +1,14 @@
 <template>
-  <v-sheet>
+  <v-sheet elevation="20">
     <v-container fluid>
-       <v-tabs
-       class="mb-10"
-    fixed-tabs
-    background-color="indigo"
-    dark
-  >
-    <v-tab>
-      Option
-    </v-tab>
-    <v-tab>
-      Another Selection
-    </v-tab>
-    <v-tab>
-      Items
-    </v-tab>
-    <v-tab>
-      Another Screen
-    </v-tab>
-  </v-tabs>
+      <v-tabs class="mb-10" fixed-tabs background-color="white">
+        <v-tab> Gallery </v-tab>
+        <v-tab to="/Carousel"> View All Images </v-tab>
+        <v-tab> Items </v-tab>
+        <v-tab> Another Screen </v-tab>
+      </v-tabs>
+
+      <v-divider class="mt-5 my-5"></v-divider>
       <v-row>
         <v-col
           v-for="(n, index) in getDropZoneImages"
@@ -52,14 +41,14 @@
           </template> -->
               <v-row justify="start" class="t1 pa-4 d-inline">
                 <v-btn-toggle v-model="toggle_none">
-                  <v-btn>
+                  <!-- <v-btn>
                     <v-icon v-on:click.stop="show">mdi-pencil</v-icon>
-                  </v-btn>
+                  </v-btn> -->
                   <!-- ********************************************************** -->
 
-                    <v-dialog v-model="dialog" persistent max-width="290">
-                      <template v-slot:activator="{ on, attrs }">
-                        <!-- <v-btn
+                  <v-dialog v-model="dialog" persistent max-width="290">
+                    <template v-slot:activator="{ on, attrs }">
+                      <!-- <v-btn
           color="primary"
           dark
           v-bind="attrs"
@@ -68,58 +57,56 @@
           Open Dialog
         </v-btn> -->
 
-                        <v-btn v-bind="attrs" v-on="on">
-                          <v-icon>mdi-delete</v-icon>
-                        </v-btn>
-                      </template>
-                      <v-card>
-                        <v-card-title class="text-h5">
-                          Delete Image.
-                        </v-card-title>
-                        <v-card-text
-                          >Are you sure you want to delete this image?.</v-card-text
+                      <v-btn v-bind="attrs" v-on="on">
+                        <v-icon>mdi-delete</v-icon>
+                      </v-btn>
+                    </template>
+                    <v-card>
+                      <v-card-title class="text-h5">
+                        Delete Image.
+                      </v-card-title>
+                      <v-card-text
+                        >Are you sure you want to delete this
+                        image?.</v-card-text
+                      >
+                      <v-card-actions>
+                        <v-spacer></v-spacer>
+                        <v-btn
+                          color="green darken-1"
+                          text
+                          @click="dialog = false"
                         >
-                        <v-card-actions>
-                          <v-spacer></v-spacer>
-                          <v-btn
-                            color="green darken-1"
-                            text
-                            @click="dialog = false"
-                          >
-                            Disagree
-                          </v-btn>
-                          <v-btn
-                            color="green darken-1"
-                            text
-                            @click="dialog = false"
-                          >
-                            Agree
-                          </v-btn>
-                        </v-card-actions>
-                      </v-card>
-                    </v-dialog>
-                  
+                          Disagree
+                        </v-btn>
+                        <v-btn
+                          color="green darken-1"
+                          text
+                          @click="dialog = false"
+                        >
+                          Agree
+                        </v-btn>
+                      </v-card-actions>
+                    </v-card>
+                  </v-dialog>
 
                   <!-- ********************************************************** -->
-                  <v-btn>
+                  <!-- <v-btn>
                     <v-icon>mdi-email</v-icon>
-                  </v-btn>
-                  <v-btn>
-                    <v-icon>mdi-format-align-justify</v-icon>
-                  </v-btn>
+                  </v-btn> -->
+                  <!-- <v-btn v-on:click.stop="route" >
+                     
+                  </v-btn> -->
+
+                  <!-- ************************************************************* -->
+                  
+
+                  <!-- ************************************************************* -->
+                  <Visibility />
                 </v-btn-toggle>
+                    <!-- <v-icon>mdi-folder </v-icon> -->
+            
+                
               </v-row>
-              <v-spacer></v-spacer>
-              <div>
-                <v-icon
-                  size="40"
-                  class="pa-5"
-                  color="red"
-                  v-on:click="wish()"
-                  style="cursor: pointer"
-                  >{{ favourite }}</v-icon
-                >
-              </div>
             </div>
           </v-img>
         </v-col>
@@ -130,11 +117,14 @@
 
 <script>
 import { mapGetters } from "vuex";
+import Visibility from "../components/Visibility.vue";
 export default {
   name: "Gallery",
-
+  components: {
+    Visibility,
+  },
   data: () => ({
-  dialog: false,
+    dialog: false,
     drawer: null,
     favourite: "mdi-heart-outline",
     path: [],
@@ -171,6 +161,9 @@ export default {
     },
     removeFiles() {
       this.$refs.myVueDropzone.removeAllFiles();
+    },
+    route() {
+      this.$router.push({ name: "Visibility" });
     },
   },
   computed: {

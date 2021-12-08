@@ -11,7 +11,7 @@ Purpose:  this file View/SignIn.vue is responsible for user authentication and l
     <div class="img-container mb-12">
       <!-- <img src="../assets/shopify.png" alt="" /> -->
     </div>
-    <h2>Login to P-cloud</h2>
+    <h2>Login to pCloud</h2>
     <v-spacer></v-spacer>
     <p class="grey--text text--darken-2 font-weight-light">
       One of the best Cloud Image plateform made for you
@@ -47,7 +47,7 @@ Purpose:  this file View/SignIn.vue is responsible for user authentication and l
     </v-snackbar>
 
     <p class="mt-5 font-weight-light">
-      Already have a shopify id?
+      Don't have a pCloud id?
       <router-link to="/"> Sign Up </router-link>
     </p>
   </v-form>
@@ -77,23 +77,13 @@ export default {
   methods: {
     submit() {
       if (this.$refs.form.validate()) {
-        const keys = Object.keys(localStorage);
-        console.log();
+     
+        this.$store.dispatch("postSignInData",this.user);
 
-        for (let key of keys) {
-          if (this.user.email === key) {
-            if (
-              this.user.pass === JSON.parse(localStorage.getItem(key)).password
-            ) {
-              localStorage.setItem("currentUser", this.user.email);
-              this.$router.push({ name: "Home" });
-            }
-          }
-        }
-        this.snackbar = true;
-      } else {
-        alert("else");
-      }
+
+
+
+     }
     },
   },
   // computed: {

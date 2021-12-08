@@ -8,11 +8,26 @@ Purpose: This file signUp.vue is responsible to handle all user data filled in S
  -->
 <template>
   <v-form class="form pa-5 rounded" ref="form">
-    <h2>Sign Up to pCloud</h2>
-    <v-spacer></v-spacer>
-    <p class="grey--text text--darken-2 font-weight-light">
-      One of the best Cloud Image plateform made for you
-    </p>
+
+    <div class="d-flex justify-center">
+      <v-avatar class="ma-auto" size="140" color="indigo">
+        <v-icon v-if="iconStatus" dark size="100"> mdi-account-circle </v-icon>
+        <img v-else :src="userData.profilePicture" alt="" />
+      </v-avatar>
+    </div>
+
+    <div class="mt-5 d-flex align-center mb-3">
+      <v-file-input
+        accept="image/*"
+        label="Update Profile Picture"
+        v-on:change="storeImg"
+        prepend-icon=""
+        append-icon="mdi-paperclip"
+      ></v-file-input>
+    </div>
+
+    <!-- ************************************************** -->
+
     <v-text-field
       append-icon="mdi-pencil-outline"
       v-model="userData.fullName"
@@ -20,23 +35,6 @@ Purpose: This file signUp.vue is responsible to handle all user data filled in S
       :rules="nameRules"
       placeholder="Full Name"
     ></v-text-field>
-
-    <!-- <v-text-field
-      v-model="userData.name.lastname"
-      append-icon="mdi-pencil-outline"
-      hint="minimum 3 characters"
-      :rules="nameRules"
-      placeholder="Last Name"
-    ></v-text-field> -->
-
-    <!-- <v-text-field
-      v-model="userData.username"
-      append-icon="mdi-account"
-      placeholder="User Name"
-      :rules="usernameRule"
-      :hint="usernameHint"
-      ref="username"
-    ></v-text-field> -->
 
     <v-text-field
       v-model="userData.email"
@@ -46,46 +44,6 @@ Purpose: This file signUp.vue is responsible to handle all user data filled in S
       :hint="emailHint"
       ref="email"
     ></v-text-field>
-
-    <!-- <v-text-field
-      v-model="userData.phone"
-      placeholder="Phone No"
-      append-icon="mdi-phone-plus-outline"
-      :rules="phoneNoRule"
-      ref="phoneNo"
-    ></v-text-field> -->
-
-    <v-text-field
-      v-model="userData.password"
-      :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
-      :type="show1 ? 'text' : 'password'"
-      placeholder="Password"
-      counter="8"
-      :rules="passwordRules"
-      @click:append="show1 = !show1"
-      hint="Must contain 1 Small and Capital letter, 1 digit (Special Characters not allowed)"
-    ></v-text-field>
-
-    <v-text-field
-      v-model="userData.confirmPassword"
-      :append-icon="show2 ? 'mdi-eye' : 'mdi-eye-off'"
-      :type="show2 ? 'text' : 'password'"
-      placeholder="Password"
-      counter="8"
-      :rules="passwordRules"
-      @click:append="show2 = !show2"
-      hint="Must contain 1 Small and Capital letter, 1 digit (Special Characters not allowed)"
-    ></v-text-field>
-
-    <!-- ************************ Need to ask ******************************** -->
-    <v-file-input
-      accept="image/*"
-      label="Upload Profile Picture"
-      v-on:change="storeImg"
-      required
-      prepend-icon=""
-      append-icon="mdi-paperclip"
-    ></v-file-input>
 
     <v-subheader>Select Age in Years:</v-subheader>
     <v-slider
@@ -107,13 +65,8 @@ Purpose: This file signUp.vue is responsible to handle all user data filled in S
       class="white--text blue darken-4 pa-5 px-12"
       elevation="2"
       @click="submit"
-      >Create P-cloud Id</v-btn
+      >Save Changes</v-btn
     >
-
-    <p class="mt-5 font-weight-light">
-      Already have a pCloud id?
-      <router-link to="/SignIn"> Login </router-link>
-    </p>
 
     <!-- *****************snack bar********************** -->
     <v-snackbar top centered color="red" v-model="snackbar" timeout="2000">
@@ -135,18 +88,17 @@ import {
 // import { mapState } from "vuex";
 
 export default {
-  name: "SignUp",
+  name: "ProfileSettings",
 
   data() {
     return {
+      iconStatus: true,
       snackbar: false,
       text: "Password Does not match",
       slider: "",
       userData: {
         fullName: "",
         email: "",
-        password: "",
-        confirmPassword: "",
         profilePicture: "",
         age: "",
       },
@@ -161,10 +113,12 @@ export default {
   methods: {
     storeImg(event) {
       let vm = this;
+      this.iconStatus = false;
       const reader = new FileReader();
       reader.addEventListener(
         "load",
         function () {
+          console.log(reader.result);
           vm.userData.profilePicture = reader.result;
         },
         false
@@ -187,7 +141,7 @@ export default {
     // ...mapState({ msg: (state) => state.SignUp.message }),
   },
   mounted() {
-    document.title = "Sign Up";
+
   },
 };
 </script>
@@ -203,9 +157,9 @@ export default {
   width: 100vw;
   height: 100vh;
 }
-.form {
+/* .form {
   background-color: rgba(0, 0, 0, 0.993) !important;
-}
+} */
 .img-container {
   width: 25%;
 }

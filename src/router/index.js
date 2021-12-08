@@ -4,6 +4,8 @@ import SignUpLogin from '../views/SignUpLogin.vue'
 import Home from '../views/Home.vue'
 import Carousel from "../components/Carousel.vue"
 import SingleImage from "../components/SingleImage.vue"
+import Visibility from "../components/Visibility.vue"
+import UpdateProfile from "../views/UpdateProfile.vue"
 
 
 
@@ -18,6 +20,16 @@ const routes = [{
         path: '/Home',
         name: 'Home',
         component: Home
+    },
+    {
+        path: '/UpdateProfile',
+        name: 'UpdateProfile',
+        component: UpdateProfile
+    },
+    {
+        path: '/Visibility',
+        name: 'Visibility',
+        component: Visibility
     },
     {
         path: '/Carousel',
