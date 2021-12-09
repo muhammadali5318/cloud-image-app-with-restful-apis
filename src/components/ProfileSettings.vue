@@ -8,11 +8,16 @@ Purpose: This file signUp.vue is responsible to handle all user data filled in S
  -->
 <template>
   <v-form class="form pa-5 rounded" ref="form">
+      <v-tabs class="  mb-8">
+        <v-tab>Profile Settings</v-tab>
+        <v-tab>Password  </v-tab>
+      </v-tabs>
 
     <div class="d-flex justify-center">
+
       <v-avatar class="ma-auto" size="140" color="indigo">
-        <v-icon v-if="iconStatus" dark size="100"> mdi-account-circle </v-icon>
-        <img v-else :src="userData.profilePicture" alt="" />
+        <!-- <v-icon v-if="iconStatus" dark size="100"> mdi-account-circle </v-icon> -->
+        <img  :src="this.currentUser.User_data.user_profile_image_path +'/' +this.currentUser.User_data.profile_image" alt="" />
       </v-avatar>
     </div>
 
@@ -30,24 +35,27 @@ Purpose: This file signUp.vue is responsible to handle all user data filled in S
 
     <v-text-field
       append-icon="mdi-pencil-outline"
-      v-model="userData.fullName"
+      v-model="currentUser.User_data.name"
       hint="minimum 3 characters"
       :rules="nameRules"
       placeholder="Full Name"
+  
     ></v-text-field>
 
     <v-text-field
-      v-model="userData.email"
+      v-model="currentUser.User_data.email"
       placeholder="Email"
       append-icon="mdi-email"
       :rules="emailRule"
       :hint="emailHint"
       ref="email"
+      disabled
+      v-on:change="testing"
     ></v-text-field>
 
     <v-subheader>Select Age in Years:</v-subheader>
     <v-slider
-      v-model="userData.age"
+      v-model="currentUser.User_data.age"
       :min="12"
       :max="90"
       color="grey darken-3"
@@ -84,6 +92,7 @@ import {
   emailRule,
   nameRules,
   passwordRules,
+  
 } from "../validation/validation.js";
 // import { mapState } from "vuex";
 
@@ -92,8 +101,13 @@ export default {
 
   data() {
     return {
+  path: "",
+  
+  currentUser: "",
       iconStatus: true,
       snackbar: false,
+      base64Img: "",
+      test: 52,
       text: "Password Does not match",
       slider: "",
       userData: {
@@ -118,21 +132,25 @@ export default {
       reader.addEventListener(
         "load",
         function () {
-          console.log(reader.result);
-          vm.userData.profilePicture = reader.result;
+          // console.log(reader.result);
+          // vm.userData.profilePicture = reader.result;
+          vm.base64Img = reader.result;
         },
         false
       );
       reader.readAsDataURL(event);
     },
+    testing(){
+alert("tested")
+    },
     submit() {
       // let validate = true;
       if (this.$refs.form.validate()) {
-        if (this.userData.password !== this.userData.confirmPassword) {
-          this.snackbar = true;
-        } else {
-          this.$store.dispatch("postSignUpData", this.userData);
-        }
+        // console.log(this.base64Img);
+          this.currentUser.User_data.profile_image = this.base64Img;
+          // console.log(this.currentUser);
+          // alert("hellod")
+          this.$store.dispatch("postUpdateProfileData", this.currentUser);
       }
     },
   },
@@ -141,7 +159,12 @@ export default {
     // ...mapState({ msg: (state) => state.SignUp.message }),
   },
   mounted() {
-
+let user =       localStorage.getItem("currentUser")
+this.currentUser = JSON.parse(user);
+console.log(this.currentUser);
+// console.log( );
+this.path =  this.currentUser.User_data.user_profile_image_path +"/" +this.currentUser.User_data.profile_image;
+// console.log(this.path);
   },
 };
 </script>

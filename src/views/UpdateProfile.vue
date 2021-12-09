@@ -10,7 +10,7 @@
         <v-col cols="12">
           <v-row >
             <v-col  cols="2">
-              <v-list flat>
+              <v-list class="hidden-xs-only" flat>
                 <!-- <v-toolbar-title class="px-5 font-weight-medium"
           >Muhammad Ali</v-toolbar-title
         > -->
@@ -30,7 +30,7 @@
               </v-list>
             </v-col>
             <v-divider class="mt-10"  vertical></v-divider>
-            <v-col cols="5" class="ma-auto" >
+            <v-col cols="12" xs="12" sm="8" md="5" class="ma-auto" >
               <keep-alive>
                 <component v-bind:is="componentName"></component>
               </keep-alive>

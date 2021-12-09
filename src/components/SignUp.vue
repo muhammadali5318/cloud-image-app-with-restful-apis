@@ -9,13 +9,15 @@ Purpose: This file signUp.vue is responsible to handle all user data filled in S
 <template>
   <v-form class="form pa-5 rounded" ref="form">
     <h2>Sign Up to pCloud</h2>
+    <v-btn v-on:click="showsnack">Show snackbar</v-btn>
+              
     <v-spacer></v-spacer>
     <p class="grey--text text--darken-2 font-weight-light">
       One of the best Cloud Image plateform made for you
     </p>
     <v-text-field
       append-icon="mdi-pencil-outline"
-      v-model="userData.fullName"
+      v-model="userData.name"
       hint="minimum 3 characters"
       :rules="nameRules"
       placeholder="Full Name"
@@ -67,7 +69,7 @@ Purpose: This file signUp.vue is responsible to handle all user data filled in S
     ></v-text-field>
 
     <v-text-field
-      v-model="userData.confirmPassword"
+      v-model="userData.password_confirmation"
       :append-icon="show2 ? 'mdi-eye' : 'mdi-eye-off'"
       :type="show2 ? 'text' : 'password'"
       placeholder="Password"
@@ -115,10 +117,18 @@ Purpose: This file signUp.vue is responsible to handle all user data filled in S
       <router-link to="/SignIn"> Login </router-link>
     </p>
 
-    <!-- *****************snack bar********************** -->
+    <!-- *****************snack for password and confirm password bar********************** -->
     <v-snackbar top centered color="red" v-model="snackbar" timeout="2000">
       <span class="group">
         {{ text }}
+
+        <v-icon dark right>mdi-alert-decagram </v-icon>
+      </span>
+    </v-snackbar>
+    <!-- *****************snack for Successfull Sign Up snack bar********************** -->
+    <v-snackbar top centered color="green" v-model="getSignUpSnackbarStatus" timeout="10000">
+      <span class="group">
+        {{ text1 }}
 
         <v-icon dark right>mdi-alert-decagram </v-icon>
       </span>
@@ -127,6 +137,7 @@ Purpose: This file signUp.vue is responsible to handle all user data filled in S
 </template>
 
 <script>
+import {mapGetters} from "vuex"
 import {
   emailRule,
   nameRules,
@@ -140,14 +151,16 @@ export default {
   data() {
     return {
       snackbar: false,
+      snackbar1: this.getSignUpSnackbarStatus,
       text: "Password Does not match",
+      text1: "Successfully Registered. Please Check your email for Verification.",
       slider: "",
       userData: {
-        fullName: "",
+        name: "",
         email: "",
         password: "",
-        confirmPassword: "",
-        profilePicture: "",
+        password_confirmation: "",
+        profile_image: "",
         age: "",
       },
       nameRules: nameRules,
@@ -165,7 +178,7 @@ export default {
       reader.addEventListener(
         "load",
         function () {
-          vm.userData.profilePicture = reader.result;
+          vm.userData.profile_image = reader.result;
         },
         false
       );
@@ -174,17 +187,21 @@ export default {
     submit() {
       // let validate = true;
       if (this.$refs.form.validate()) {
-        if (this.userData.password !== this.userData.confirmPassword) {
+        if (this.userData.password !== this.userData.password_confirmation) {
           this.snackbar = true;
         } else {
           this.$store.dispatch("postSignUpData", this.userData);
+         this.snackbar1 = this.getSignUpSnackbarStatus;
         }
       }
     },
+    showsnack(){
+      alert(this.getSignUpSnackbarStatus)
+    }
   },
   computed: {
     // this.$router.push({ name: "Home" });
-    // ...mapState({ msg: (state) => state.SignUp.message }),
+    ...mapGetters(["getSignUpSnackbarStatus"]),
   },
   mounted() {
     document.title = "Sign Up";

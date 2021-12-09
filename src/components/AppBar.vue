@@ -4,20 +4,25 @@ this file components/AppBar.vue is the main header main Navbar used in all the c
 
 <template>
   <div>
-    <v-app-bar class="blue lighten-3 text-white mb-16" app>
+    <v-app-bar class=" text-white mb-16" app>
       <v-app-bar-nav-icon
         class="hidden-lg-and-up"
         @click="drawer = !drawer"
       ></v-app-bar-nav-icon>
 
-      <v-toolbar-title> <h2>pCloud</h2> </v-toolbar-title>
+        <!-- <div style="height: 100%">
+          <v-img src="../assets/pcloud logo.png"></v-img>
+        </div> -->
+      <v-toolbar-title style="cursor: pointer;" >
+        <v-img src="../assets/logo.png" v-on:click="route('Home')"></v-img>
+      </v-toolbar-title>
 
       <v-spacer></v-spacer>
 
       <!-- *********************8 drop zone******************** -->
       <v-bottom-sheet :scrollable="true" v-model="sheet">
         <template v-slot:activator="{ on, attrs }">
-          <v-btn light text v-bind="attrs" v-on="on">
+          <v-btn class="text-sm-body1" light text v-bind="attrs" v-on="on">
             Upload Image
             <v-icon right size="28"> mdi-cloud-upload-outline </v-icon>
           </v-btn>
@@ -49,7 +54,7 @@ this file components/AppBar.vue is the main header main Navbar used in all the c
         <v-menu offset-y>
           <template v-slot:activator="{ on, attrs }">
             <v-btn color="black" dark v-bind="attrs" v-on="on" text>
-            Welcome
+              Muhammad Ali
               <v-icon> mdi-chevron-down </v-icon>
             </v-btn>
           </template>
@@ -66,21 +71,19 @@ this file components/AppBar.vue is the main header main Navbar used in all the c
         </v-menu>
       </div>
       <!-- ***************************************** -->
-
-      
     </v-app-bar>
 
     <v-navigation-drawer
-      class="blue lighten-4"
+
       v-model="drawer"
       fixed
       temporary
     >
       <v-list flat>
         <v-toolbar-title class="px-5 font-weight-medium"
-          >Shopify Navigation</v-toolbar-title
+          >Muhammad Ali</v-toolbar-title
         >
-        <p class="px-5">Shop your favourite item.</p>
+        <div class="px-5 text-caption ">Logged In</div>
         <v-divider></v-divider>
         <v-list-item-group v-model="selectedItem" color="primary">
           <v-list-item
@@ -138,20 +141,15 @@ export default {
       //     { title: 'Click Me 2' },
       //   ],
       items: [
+
         { text: "Home", icon: "mdi-home", routeName: "Home" },
-        { text: "Profile", icon: "mdi-account-box", routeName: "UserProfile" },
+        { text: "Profile", icon: "mdi-account-box", routeName: "UpdateProfile" },
+        { text: "About us", icon: "mdi-information", routeName: "" },
         {
-          text: "Products Store",
+          text: "Logout",
           icon: "mdi-bag-checked",
           routeName: "ProductsView",
         },
-        {
-          text: "View Cart",
-          icon: "mdi-cart",
-          routeName: "viewcart",
-        },
-        { text: "About us", icon: "mdi-information", routeName: "" },
-        { text: "Contact us", icon: "mdi-card-account-phone", routeName: "" },
       ],
     };
   },

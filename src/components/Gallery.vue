@@ -40,14 +40,15 @@
             </v-row>
           </template> -->
               <v-row justify="start" class="t1 pa-4 d-inline">
-                <v-btn-toggle v-model="toggle_none">
+                <v-btn-toggle class="backgroundTransparent" v-model="toggle_none">
                   <!-- <v-btn>
                     <v-icon v-on:click.stop="show">mdi-pencil</v-icon>
                   </v-btn> -->
                   <!-- ********************************************************** -->
+                  
 
-                  <v-dialog v-model="dialog" persistent max-width="290">
-                    <template v-slot:activator="{ on, attrs }">
+                  <v-dialog class="backgroundTransparent" v-model="dialog" persistent max-width="290">
+                    <template class="backgroundTransparent" v-slot:activator="{ on, attrs }">
                       <!-- <v-btn
           color="primary"
           dark
@@ -57,8 +58,8 @@
           Open Dialog
         </v-btn> -->
 
-                      <v-btn v-bind="attrs" v-on="on">
-                        <v-icon>mdi-delete</v-icon>
+                      <v-btn class="backgroundTransparent" v-bind="attrs" v-on="on">
+                        <v-icon color="white">mdi-delete</v-icon>
                       </v-btn>
                     </template>
                     <v-card>
@@ -90,9 +91,9 @@
                   </v-dialog>
 
                   <!-- ********************************************************** -->
-                  <!-- <v-btn>
-                    <v-icon>mdi-email</v-icon>
-                  </v-btn> -->
+                  <v-btn style="background-color: transparent; border: none" >
+<Visibility />
+                  </v-btn>
                   <!-- <v-btn v-on:click.stop="route" >
                      
                   </v-btn> -->
@@ -101,7 +102,6 @@
                   
 
                   <!-- ************************************************************* -->
-                  <Visibility />
                 </v-btn-toggle>
                     <!-- <v-icon>mdi-folder </v-icon> -->
             
@@ -174,4 +174,10 @@ export default {
 
 <style scoped>
 @import url("https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css");
+.backgroundTransparent{
+  /* background-color: transparent !important; */
+   background-color: rgba(255, 255, 255, 0.137) !important;
+  border: 1px solid white;
+  border-radius: 5px;
+}
 </style>

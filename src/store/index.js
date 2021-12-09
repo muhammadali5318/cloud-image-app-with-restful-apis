@@ -13,6 +13,7 @@ export default new Vuex.Store({
         // it will store signin and sign up form data
         signInData: "",
         signUpData: "",
+        signUpSnackbar: false
 
 
     },
@@ -29,6 +30,9 @@ export default new Vuex.Store({
         },
         SET_SIGNUP_DATA(state, signUpData) {
             state.signUpData = signUpData;
+        },
+        SET_SIGNUP_SNACKBAR(state, signUpSnackbar) {
+            state.signUpSnackbar = signUpSnackbar;
         }
     },
     actions: {
@@ -40,16 +44,60 @@ export default new Vuex.Store({
         fetchImageIndex({ commit }, payload) {
             commit("SET_IMAGE_INDEX", payload)
         },
+
+        // ***************** Axios with headers **************************
+        // axios.post("http://192.168.88.37:8080/user/emailConfirmation/haseeb1111@gmail.com/d41d8cd98f00b204e9800998ecf8427e", payload)
+        // .then(function(response) {
+        //     console.log(response);
+        //     commit("SET_SIGNIN_DATA", response.data);
+        // })
+        // .catch(function(error) {
+        //     console.log(error);
+        // });
+
+        // ***************** ****************** **************************
+
+
+        // ************Update Profile *****************
+        postUpdateProfileData({ commit }, payload) {
+            console.log(commit);
+            console.log(payload);
+
+            console.log(JSON.parse(localStorage.getItem("currentUserToken")));
+
+
+
+            const headers = {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer' + localStorage.getItem("currentUserToken")
+            }
+            console.log(headers);
+            // axios.post("", payload, {
+            //         headers: headers
+            //     })
+            //     .then((response) => {
+            //         console.log(response.data);
+            //     })
+            //     .catch((error) => {
+            //         console.log(error);
+            //     })
+
+
+        },
         // ************Sign In *****************
         postSignInData({ commit }, payload) {
             console.log(commit);
             console.log(payload);
 
             // call sign in api here
-            axios.post("https://jsonplaceholder.typicode.com/posts", payload)
+            axios.get("http://192.168.88.37:8080/user/emailConfirmation/haseeb1111@gmail.com/d41d8cd98f00b204e9800998ecf8427e")
                 .then(function(response) {
-                    console.log(response);
-                    commit("SET_SIGNIN_DATA", response.data);
+
+                    localStorage.setItem("currentUser", JSON.stringify(response.data.data))
+                    localStorage.setItem("currentUserToken", JSON.stringify(response.data.data.Authentication))
+
+                    // console.log(response.data.data.Authentication);
+                    // commit("SET_SIGNIN_DATA", response.data);
                 })
                 .catch(function(error) {
                     console.log(error);
@@ -61,13 +109,14 @@ export default new Vuex.Store({
             console.log(payload);
 
             // call sign up api here
-            axios.post("https://jsonplaceholder.typicode.com/posts", payload)
+            axios.post("http://192.168.88.37:8080/user/register", payload)
                 .then(function(response) {
                     console.log(response);
                     commit("SET_SIGNUP_DATA", response.data);
+                    commit("SET_SIGNUP_SNACKBAR", true);
                 })
                 .catch(function(error) {
-                    console.log(error);
+                    console.log(error.response.data);
                 });
         },
         // ************Forgot Password api call *****************
@@ -92,6 +141,9 @@ export default new Vuex.Store({
         },
         getImageIndex(state) {
             return state.imageIndex;
+        },
+        getSignUpSnackbarStatus(state) {
+            return state.signUpSnackbar;
         }
     },
     modules: {}

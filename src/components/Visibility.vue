@@ -1,10 +1,10 @@
 
 <template>
-  <v-row justify="center">
-    <v-dialog v-model="dialog" persistent max-width="600px">
-      <template v-slot:activator="{ on, attrs }">
-        <v-btn v-bind="attrs" v-on="on">
-          <v-icon>mdi-eye</v-icon>
+  <v-row class="backgroundTransparent" justify="center">
+    <v-dialog class="backgroundTransparent" v-model="dialog" persistent max-width="600px">
+      <template class="backgroundTransparent" v-slot:activator="{ on, attrs }">
+        <v-btn class="backgroundTransparent" v-bind="attrs" v-on="on">
+          <v-icon color="white">mdi-eye</v-icon>
         </v-btn>
       </template>
       <v-card>
@@ -108,6 +108,16 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+
+.backgroundTransparent{
+  background-color: transparent !important;
+  /* border: 1px solid white; */
+  border: none;
+  /* border-radius: 5px; */
+}
+</style>
 <!--
 <style scoped>
 .wrapper {

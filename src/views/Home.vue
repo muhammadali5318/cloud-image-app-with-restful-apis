@@ -69,7 +69,6 @@
 <script>
 import AppBar from "../components/AppBar.vue";
 import Gallery from "../components/Gallery.vue";
-// import SignUpLogin from "./SignUpLogin.vue";
 
 export default {
   name: "Home",

@@ -1,6 +1,6 @@
 <template>
   
-    <v-main class="main blue lighten-5 align-center">
+    <v-main class=" blue lighten-5 align-center">
       <v-container fluid>
         <v-row>
           <v-col
