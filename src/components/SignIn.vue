@@ -7,7 +7,7 @@ Purpose:  this file View/SignIn.vue is responsible for user authentication and l
 
 
 <template>
-  <v-form ref="form" class="pa-5 rounded form">
+  <v-form ref="form"  class="pa-5 rounded form">
     <div class="img-container mb-12">
       <!-- <img src="../assets/shopify.png" alt="" /> -->
     </div>
@@ -27,14 +27,15 @@ Purpose:  this file View/SignIn.vue is responsible for user authentication and l
     ></v-text-field>
 
     <v-text-field
-      v-model="user.pass"
+      v-model="user.password"
       :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
       :type="show1 ? 'text' : 'password'"
       placeholder="Password"
+      :rules="passwordRules"
       @click:append="show1 = !show1"
     ></v-text-field>
 
-    <v-btn class="white--text blue darken-4 px-4" elevation="2" @click="submit"
+    <v-btn class="white--text blue darken-4 px-4" :loading="getLoadingStatus" elevation="2" @click="submit"
       >Login</v-btn
     >
 
@@ -50,21 +51,32 @@ Purpose:  this file View/SignIn.vue is responsible for user authentication and l
       Don't have a pCloud id?
       <router-link to="/"> Sign Up </router-link>
     </p>
+
+ <!-- *****************snack for error messages r********************** -->
+    <v-snackbar top centered :color="getSnackbarColor" :value="getSnackbarStatus" timeout="3000">
+      <span class="group">
+        {{ getSnackbarErrorMsg }} 
+
+        <v-icon dark right>mdi-alert-decagram </v-icon>
+      </span>
+    </v-snackbar>
+
   </v-form>
 </template>
 
 <script>
 import { emailRule, passwordRules } from "../validation/validation.js";
-// import { mapState } from "vuex";
+import { mapGetters } from "vuex";
 
 export default {
   name: "SignIn",
 
   data() {
     return {
+      status: this.getSignInSnackbarStatus,
       user: {
         email: "",
-        pass: "",
+        password: "",
       },
       snackbar: false,
       text: "Invalid Credentials",
@@ -78,27 +90,28 @@ export default {
     submit() {
       if (this.$refs.form.validate()) {
      
+        this.$store.dispatch("updateSnackBarStatus",false);
         this.$store.dispatch("postSignInData",this.user);
-
-
-
 
      }
     },
   },
-  // computed: {
-  //   ...mapState({ msg: (state) => state.SignUp.message }),
-  // },
+  computed: {
+        ...mapGetters(["getSnackbarStatus"]),
+        ...mapGetters(["getSnackbarErrorMsg"]),
+        ...mapGetters(["getSnackbarColor"]),
+        ...mapGetters(["getLoadingStatus"]),
+  },
   mounted() {
     document.title = "Login";
   },
 };
 </script>
 
-
+<!--
 <style scoped>
 .wrapper {
-  /* background: url("../assets/back.jpg"); */
+  background: url("../assets/back.jpg");
   background-repeat: no-repeat;
   background-position: center;
   overflow-y: auto;
@@ -123,3 +136,5 @@ export default {
   width: 100%;
 }
 </style>
+
+-->

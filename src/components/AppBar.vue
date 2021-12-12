@@ -4,16 +4,16 @@ this file components/AppBar.vue is the main header main Navbar used in all the c
 
 <template>
   <div>
-    <v-app-bar class=" text-white mb-16" app>
+    <v-app-bar class="text-white mb-16" app>
       <v-app-bar-nav-icon
         class="hidden-lg-and-up"
         @click="drawer = !drawer"
       ></v-app-bar-nav-icon>
 
-        <!-- <div style="height: 100%">
+      <!-- <div style="height: 100%">
           <v-img src="../assets/pcloud logo.png"></v-img>
         </div> -->
-      <v-toolbar-title style="cursor: pointer;" >
+      <v-toolbar-title style="cursor: pointer">
         <v-img src="../assets/logo.png" v-on:click="route('Home')"></v-img>
       </v-toolbar-title>
 
@@ -34,6 +34,10 @@ this file components/AppBar.vue is the main header main Navbar used in all the c
           <v-btn class="mt-6" text color="error" @click="removeFiles">
             Reset
           </v-btn>
+          <v-btn class="mt-6" text color="error" @click="uploadImages">
+            Upload
+          </v-btn>
+
 
           <div>
             <vue-dropzone
@@ -73,17 +77,12 @@ this file components/AppBar.vue is the main header main Navbar used in all the c
       <!-- ***************************************** -->
     </v-app-bar>
 
-    <v-navigation-drawer
-
-      v-model="drawer"
-      fixed
-      temporary
-    >
+    <v-navigation-drawer v-model="drawer" fixed temporary>
       <v-list flat>
         <v-toolbar-title class="px-5 font-weight-medium"
           >Muhammad Ali</v-toolbar-title
         >
-        <div class="px-5 text-caption ">Logged In</div>
+        <div class="px-5 text-caption">Logged In</div>
         <v-divider></v-divider>
         <v-list-item-group v-model="selectedItem" color="primary">
           <v-list-item
@@ -107,7 +106,7 @@ this file components/AppBar.vue is the main header main Navbar used in all the c
 <script>
 import vue2Dropzone from "vue2-dropzone";
 import "vue2-dropzone/dist/vue2Dropzone.min.css";
-import { mapGetters } from "vuex";
+// import { mapGetters } from "vuex";
 export default {
   name: "appbar",
   props: ["appbarId"],
@@ -116,6 +115,16 @@ export default {
   },
   data() {
     return {
+      // *************************** Image Data *******************************
+
+
+      imagesData: {
+        visibility: "Hidden",
+        share_with: [],
+        attachments: [],
+      },
+      test: [],
+
       // ***********************************************
       path: [],
       sheet: false,
@@ -141,9 +150,12 @@ export default {
       //     { title: 'Click Me 2' },
       //   ],
       items: [
-
         { text: "Home", icon: "mdi-home", routeName: "Home" },
-        { text: "Profile", icon: "mdi-account-box", routeName: "UpdateProfile" },
+        {
+          text: "Profile",
+          icon: "mdi-account-box",
+          routeName: "UpdateProfile",
+        },
         { text: "About us", icon: "mdi-information", routeName: "" },
         {
           text: "Logout",
@@ -157,35 +169,45 @@ export default {
     route(routeName) {
       this.$router.push({ name: routeName });
     },
-    goToCart() {
-      this.$router.push({ name: "viewcart" });
-    },
     logout() {
       this.$router.push({ name: "SignIn" });
       localStorage.setItem("currentUser", "");
     },
     success(file, response) {
-      // console.log(response.files);
-      // this.path.push(response.files.file);
+
+      let obj = {
+        image_name: "",
+        base64_image: "",
+      };
+
+
+      obj.image_name = file.name;
+      obj.base64_image = response.files.file;
+      this.imagesData.attachments.push(obj);
+
       this.$store.dispatch("dropZoneImages", response.files.file);
-      // console.log(this.path);
     },
-    wish() {
-      this.favourite = "mdi-heart";
-    },
+
     removeFiles() {
       this.$refs.myVueDropzone.removeAllFiles();
     },
+    uploadImages() {
+      alert("images Uploaded");
+      console.log(this.imagesData);
+
+      // this.$store.dispatch("postImagesData", this.imagesData);
+    },
+
   },
 
   computed: {
-    ...mapGetters(["getCurrentUserCartData"]),
+ 
   },
   mounted() {
     // if (localStorage.getItem("currentUser") === "") {
     //   this.appBarStatus = false;
     // }
-    // alert(typeof );
+    // alert(typeof);
   },
 };
 </script>

@@ -126,9 +126,9 @@ Purpose: This file signUp.vue is responsible to handle all user data filled in S
       </span>
     </v-snackbar>
     <!-- *****************snack for Successfull Sign Up snack bar********************** -->
-    <v-snackbar top centered color="green" v-model="getSignUpSnackbarStatus" timeout="10000">
+    <v-snackbar top centered color="red" :value="getSnackbarStatus" timeout="10000">
       <span class="group">
-        {{ text1 }}
+        {{ getSnackbarErrorMsg }}
 
         <v-icon dark right>mdi-alert-decagram </v-icon>
       </span>
@@ -174,11 +174,15 @@ export default {
   methods: {
     storeImg(event) {
       let vm = this;
+      console.log(event);
+      console.log(event.type);
+      console.log(event.name);
       const reader = new FileReader();
       reader.addEventListener(
         "load",
         function () {
           vm.userData.profile_image = reader.result;
+          console.log(reader.result);
         },
         false
       );
@@ -190,8 +194,9 @@ export default {
         if (this.userData.password !== this.userData.password_confirmation) {
           this.snackbar = true;
         } else {
-          this.$store.dispatch("postSignUpData", this.userData);
-         this.snackbar1 = this.getSignUpSnackbarStatus;
+        this.$store.dispatch("updateSnackBarStatus", false);
+        this.$store.dispatch("postSignUpData", this.userData);
+        
         }
       }
     },
@@ -201,10 +206,13 @@ export default {
   },
   computed: {
     // this.$router.push({ name: "Home" });
-    ...mapGetters(["getSignUpSnackbarStatus"]),
+    ...mapGetters(["getSnackbarStatus"]),
+    ...mapGetters(["getSnackbarErrorMsg"]),
+    ...mapGetters(["getLoadingStatus"]),
   },
   mounted() {
     document.title = "Sign Up";
+            this.$store.dispatch("updateSnackBarStatus", false);
   },
 };
 </script>

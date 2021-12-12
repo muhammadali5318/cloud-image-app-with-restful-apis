@@ -8,16 +8,18 @@ Purpose: This file signUp.vue is responsible to handle all user data filled in S
  -->
 <template>
   <v-form class="form pa-5 rounded" ref="form">
-      <v-tabs class="  mb-8">
-        <v-tab>Profile Settings</v-tab>
-        <v-tab>Password  </v-tab>
-      </v-tabs>
+    <v-tabs class="mb-8">
+      <v-tab>Profile Settings</v-tab>
+      <v-tab>Password </v-tab>
+    </v-tabs>
 
     <div class="d-flex justify-center">
-
       <v-avatar class="ma-auto" size="140" color="indigo">
         <!-- <v-icon v-if="iconStatus" dark size="100"> mdi-account-circle </v-icon> -->
-        <img  :src="this.currentUser.User_data.user_profile_image_path +'/' +this.currentUser.User_data.profile_image" alt="" />
+        <img
+          :src="currentUser.user_profile_image_path + '/' + currentUser.profile_image"
+          alt=""
+        />
       </v-avatar>
     </div>
 
@@ -35,27 +37,25 @@ Purpose: This file signUp.vue is responsible to handle all user data filled in S
 
     <v-text-field
       append-icon="mdi-pencil-outline"
-      v-model="currentUser.User_data.name"
+      v-model="currentUser.name"
       hint="minimum 3 characters"
       :rules="nameRules"
       placeholder="Full Name"
-  
     ></v-text-field>
 
     <v-text-field
-      v-model="currentUser.User_data.email"
+      v-model="currentUser.email"
       placeholder="Email"
       append-icon="mdi-email"
       :rules="emailRule"
       :hint="emailHint"
       ref="email"
       disabled
-      v-on:change="testing"
     ></v-text-field>
 
     <v-subheader>Select Age in Years:</v-subheader>
     <v-slider
-      v-model="currentUser.User_data.age"
+      v-model="currentUser.age"
       :min="12"
       :max="90"
       color="grey darken-3"
@@ -73,15 +73,21 @@ Purpose: This file signUp.vue is responsible to handle all user data filled in S
       class="white--text blue darken-4 pa-5 px-12"
       elevation="2"
       @click="submit"
+      :loading="getLoadingStatus"
       >Save Changes</v-btn
     >
 
     <!-- *****************snack bar********************** -->
-    <v-snackbar top centered color="red" v-model="snackbar" timeout="2000">
+    <v-snackbar
+      top
+      centered
+      :color="getSnackbarColor"
+      :value="getSnackbarStatus"
+      timeout="2000"
+    >
       <span class="group">
-        {{ text }}
-
-        <v-icon dark right>mdi-alert-decagram </v-icon>
+        {{ getSnackbarErrorMsg }}
+        <v-icon dark>mdi-check-decagram-outline </v-icon>
       </span>
     </v-snackbar>
   </v-form>
@@ -92,8 +98,8 @@ import {
   emailRule,
   nameRules,
   passwordRules,
-  
 } from "../validation/validation.js";
+import { mapGetters } from "vuex";
 // import { mapState } from "vuex";
 
 export default {
@@ -101,9 +107,9 @@ export default {
 
   data() {
     return {
-  path: "",
-  
-  currentUser: "",
+      path: "",
+
+      currentUser: "",
       iconStatus: true,
       snackbar: false,
       base64Img: "",
@@ -111,9 +117,8 @@ export default {
       text: "Password Does not match",
       slider: "",
       userData: {
-        fullName: "",
-        email: "",
-        profilePicture: "",
+        name: "",
+        profile_image: "",
         age: "",
       },
       nameRules: nameRules,
@@ -133,45 +138,67 @@ export default {
         "load",
         function () {
           // console.log(reader.result);
-          // vm.userData.profilePicture = reader.result;
+          // vm.userData.profile_image = reader.result;
           vm.base64Img = reader.result;
         },
         false
       );
       reader.readAsDataURL(event);
     },
-    testing(){
-alert("tested")
+    testing() {
+      alert("tested");
     },
     submit() {
-      // let validate = true;
       if (this.$refs.form.validate()) {
-        // console.log(this.base64Img);
-          this.currentUser.User_data.profile_image = this.base64Img;
-          // console.log(this.currentUser);
-          // alert("hellod")
-          this.$store.dispatch("postUpdateProfileData", this.currentUser);
+        this.userData.name = this.currentUser.name;
+        // this.userData.id = this.currentUser.User_data.id;
+        this.userData.age = this.currentUser.age;
+        this.userData.profile_image = this.base64Img;
+        // console.log(this.currentUser);
+        // console.log("***********************");
+        // console.log(this.userData);
+
+        //  This dispatch method will update the user profile in backend database
+
+        this.$store.dispatch("updateSnackBarStatus", false);
+        this.$store.dispatch("postUpdateProfileData", this.userData);
+       setTimeout(() => {
+         if (this.getSnackbarErrorMsg == "Session Expire, Please Login Again") {
+           this.$store.dispatch("updateSnackBarStatus", false);
+            this.$router.push({name: "SignUpLogin"})
+          }
+       }, 3000);
+
       }
     },
   },
   computed: {
     // this.$router.push({ name: "Home" });
-    // ...mapState({ msg: (state) => state.SignUp.message }),
+    ...mapGetters(["getSnackbarStatus"]),
+    ...mapGetters(["getSnackbarErrorMsg"]),
+    ...mapGetters(["getSnackbarColor"]),
+    ...mapGetters(["getLoadingStatus"]),
+    // ...mapGetters(["getTesting"]),
   },
   mounted() {
-let user =       localStorage.getItem("currentUser")
-this.currentUser = JSON.parse(user);
-console.log(this.currentUser);
-// console.log( );
-this.path =  this.currentUser.User_data.user_profile_image_path +"/" +this.currentUser.User_data.profile_image;
-// console.log(this.path);
+    let user = localStorage.getItem("currentUser");
+    this.currentUser = JSON.parse(user);
+    console.log(this.currentUser);
+    console.log(this.currentUser.profile_image);
+    console.log(this.currentUser.user_profile_image_path);
+
+    // this.path =this.currentUser.user_profile_image_path +
+    //   "/" +
+    //   this.currentUser.profile_image;
+    // console.log(this.path);
   },
 };
 </script>
 
+<!--
 <style scoped>
 .wrapper {
-  /* background: url("../assets/back.jpg"); */
+  background: url("../assets/back.jpg");
   background-repeat: no-repeat;
   background-position: center;
   overflow-y: auto;
@@ -180,9 +207,9 @@ this.path =  this.currentUser.User_data.user_profile_image_path +"/" +this.curre
   width: 100vw;
   height: 100vh;
 }
-/* .form {
+.form {
   background-color: rgba(0, 0, 0, 0.993) !important;
-} */
+}
 .img-container {
   width: 25%;
 }
@@ -190,3 +217,4 @@ this.path =  this.currentUser.User_data.user_profile_image_path +"/" +this.curre
   width: 100%;
 }
 </style>
+-->

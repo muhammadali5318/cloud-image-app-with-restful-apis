@@ -18,11 +18,11 @@ Purpose:  this file View/SignIn.vue is responsible for user authentication and l
     </p>
 
     <v-text-field
-      v-model="user.email"
+      v-model="userEmail.email"
       placeholder="Email"
       append-icon="mdi-email"
       :rules="emailRule"
-      :hint="emailHint"
+      :hint="getTesting"
       ref="email"
     ></v-text-field>
 
@@ -30,35 +30,30 @@ Purpose:  this file View/SignIn.vue is responsible for user authentication and l
       >Reset</v-btn
     >
 
-    <v-snackbar top centered color="red" v-model="snackbar" timeout="2000">
+    <v-snackbar top centered color="red" :value="getSnackbarStatus" timeout="2000">
       <span class="group">
-        {{ text }}
-
+        {{ getSnackbarErrorMsg }}
         <v-icon dark>mdi-check-decagram-outline </v-icon>
       </span>
     </v-snackbar>
-
-    <!-- <p class="mt-5 font-weight-light">
-      Already have a shopify id?
-      <router-link to="/"> Sign Up </router-link>
-    </p> -->
   </v-form>
 </template>
 
 <script>
 import { emailRule, passwordRules } from "../validation/validation.js";
-// import { mapState } from "vuex";
+import {mapGetters} from "vuex"
 
 export default {
   name: "FortgotPassword",
 
   data() {
     return {
-      user: {
-        email: ""
+      userEmail: {
+
+        email: "",
       },
       snackbar: false,
-      text: "Invalid Credentials",
+      // text: "Invalid Credentials",
       emailRule: emailRule,
       passwordRules: passwordRules,
       emailHint: null,
@@ -69,7 +64,11 @@ export default {
     submit() {
       if (this.$refs.form.validate()) {
         
-          this.$store.dispatch("postForgotPasswordData",this.user);
+        if(this.getTesting != ""){
+          // console.log("empty");
+        this.$refs.email.focus();
+        }
+          this.$store.dispatch("postForgotPasswordData",this.userEmail);
 
 
         this.snackbar = true;
@@ -77,6 +76,13 @@ export default {
         alert("else");
       }
     },
+  },
+    computed: {
+    // this.$router.push({ name: "Home" });
+    ...mapGetters(["getSnackbarStatus"]),
+    ...mapGetters(["getSnackbarErrorMsg"]),
+    ...mapGetters(["getTesting"]),
+
   },
   // computed: {
   //   ...mapState({ msg: (state) => state.SignUp.message }),

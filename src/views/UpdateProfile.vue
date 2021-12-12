@@ -66,14 +66,7 @@ export default {
         { title: "Profile", icon: "mdi-chevron-right" , componentName: "ProfileSettings" },
         { title: "Password", icon: "mdi-chevron-right", componentName: "ResetPassword" },
       ],
-      userData: {
-        fullName: "",
-        email: "",
-        password: "",
-        confirmPassword: "",
-        profilePicture: "",
-        age: "",
-      },
+     
     };
   },
 

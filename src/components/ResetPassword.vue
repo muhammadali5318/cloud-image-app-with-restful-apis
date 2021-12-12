@@ -12,12 +12,8 @@ Purpose: This file signUp.vue is responsible to handle all user data filled in S
  
 <template>
   <v-form class="form pa-5 rounded" ref="form">
-   
-
-    <!-- ************************************************** -->
-
-        <v-text-field
-      v-model="userData.oldPassword"
+    <v-text-field
+      v-model="userData.old_password"
       :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
       :type="show1 ? 'text' : 'password'"
       placeholder="Old Password"
@@ -28,12 +24,10 @@ Purpose: This file signUp.vue is responsible to handle all user data filled in S
       class="mb-8"
     ></v-text-field>
 
+    <v-divider></v-divider>
 
-<v-divider></v-divider>
-
-
-        <v-text-field
-      v-model="userData.newPassword"
+    <v-text-field
+      v-model="userData.password"
       :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
       :type="show1 ? 'text' : 'password'"
       placeholder="New Password"
@@ -45,7 +39,7 @@ Purpose: This file signUp.vue is responsible to handle all user data filled in S
     ></v-text-field>
 
     <v-text-field
-      v-model="userData.confirmNewPassword"
+      v-model="userData.password_confirmation"
       :append-icon="show2 ? 'mdi-eye' : 'mdi-eye-off'"
       :type="show2 ? 'text' : 'password'"
       placeholder="Confirm New Password"
@@ -59,27 +53,35 @@ Purpose: This file signUp.vue is responsible to handle all user data filled in S
       class="white--text blue darken-4 pa-5 px-12"
       elevation="2"
       @click="submit"
+      :loading="getLoadingStatus"
       >Reset Password</v-btn
     >
 
     <!-- *****************snack bar********************** -->
-    <v-snackbar top centered color="red" v-model="snackbar" timeout="2000">
+     <v-snackbar top centered :color="getSnackbarColor" :value="getSnackbarStatus" timeout="2000">
       <span class="group">
-        {{ text }}
+        {{ getSnackbarErrorMsg }} 
 
         <v-icon dark right>mdi-alert-decagram </v-icon>
       </span>
     </v-snackbar>
+     <v-snackbar top centered color="red" v-model="snackbar" timeout="1000">
+      <span class="group">
+        {{ text }} 
+
+        <v-icon dark right>mdi-alert-decagram </v-icon>
+      </span>
+    </v-snackbar>
+
   </v-form>
 </template>
 
 <script>
+import { mapGetters } from "vuex";
 import {
-  emailRule,
-  nameRules,
   passwordRules,
 } from "../validation/validation.js";
-// import { mapState } from "vuex";
+
 
 export default {
   name: "ProfileSettings",
@@ -91,57 +93,43 @@ export default {
       text: "Password Does not match",
       slider: "",
       userData: {
-        oldPassword: "",
-        newPassword: "",
-        confirmNewPassword: ""
+        old_password: "",
+        password: "",
+        password_confirmation: "",
       },
-      nameRules: nameRules,
       passwordRules: passwordRules,
-      emailRule: emailRule,
       emailHint: null,
       show1: false,
       show2: false,
     };
   },
   methods: {
-    storeImg(event) {
-      let vm = this;
-      this.iconStatus = false;
-      const reader = new FileReader();
-      reader.addEventListener(
-        "load",
-        function () {
-          console.log(reader.result);
-          vm.userData.profilePicture = reader.result;
-        },
-        false
-      );
-      reader.readAsDataURL(event);
-    },
+    
     submit() {
-      // let validate = true;
       if (this.$refs.form.validate()) {
-        if (this.userData.password !== this.userData.confirmPassword) {
+        if (this.userData.password !== this.userData.password_confirmation) {
           this.snackbar = true;
         } else {
-          this.$store.dispatch("postSignUpData", this.userData);
+          this.$store.dispatch("postResetPasswordData", this.userData);
         }
       }
     },
   },
-  computed: {
-    // this.$router.push({ name: "Home" });
-    // ...mapState({ msg: (state) => state.SignUp.message }),
+   computed: {
+     // this.$router.push({ name: "Home" });
+        ...mapGetters(["getSnackbarStatus"]),
+        ...mapGetters(["getSnackbarErrorMsg"]),
+        ...mapGetters(["getSnackbarColor"]),
+        ...mapGetters(["getLoadingStatus"]),
   },
-  mounted() {
-
-  },
+  mounted() {},
 };
 </script>
 
+<!--
 <style scoped>
 .wrapper {
-  /* background: url("../assets/back.jpg"); */
+  background: url("../assets/back.jpg");
   background-repeat: no-repeat;
   background-position: center;
   overflow-y: auto;
@@ -150,9 +138,9 @@ export default {
   width: 100vw;
   height: 100vh;
 }
-/* .form {
+.form {
   background-color: rgba(0, 0, 0, 0.993) !important;
-} */
+}
 .img-container {
   width: 25%;
 }
@@ -160,3 +148,4 @@ export default {
   width: 100%;
 }
 </style>
+-->

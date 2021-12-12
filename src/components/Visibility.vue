@@ -19,7 +19,7 @@
                   v-for="(n, index) in radioData"
                   :key="n"
                   :label="n"
-                  :value="n"
+                  :value="index+1"
                   v-on:click="show(index)"
                 ></v-radio>
               </v-radio-group>
@@ -47,6 +47,10 @@
           <v-btn color="blue darken-1" text @click="dialog = false">
             Close
           </v-btn>
+
+
+
+          
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -63,10 +67,10 @@ export default {
       emailStatus: true,
       radioGroup: 1,
       dialog: false,
-      radioData: ["Public", "Private", "Share With some"],
+      radioData: ["Hidden", "Public", "Private"],
       userData: {
         email: "",
-        Status: "",
+        Status: "hidden",
       },
 
       emailRule: emailRule,
@@ -79,17 +83,20 @@ export default {
     // need to ask
     show(n) {
       if (n === 0) {
-        alert(n);
+        this.emailStatus = true;
+        this.userData.Status = "hidden";
+        console.log(this.userData);
+        // console.log(this.radioGroup);
+      } else if (n === 1) {
         this.emailStatus = true;
         this.userData.Status = "public";
-      } else if (n === 1) {
-        alert(n);
-        this.emailStatus = true;
-        this.userData.Status = "private";
+        console.log(this.userData);
+        // console.log(this.radioGroup);
       } else {
-        this.userData.Status = "";
+        this.userData.Status = "private";
+        // this.userData.Status = "";
         this.emailStatus = false;
-        alert("else");
+
       }
     },
 
@@ -98,7 +105,7 @@ export default {
       // if (this.$refs.form.validate()) {
         this.dialog = false
       alert("saved");
-      console.log(JSON.stringify(this.userData));
+      console.log(this.userData);
       // }
     },
   },

@@ -17,12 +17,12 @@
               lg="2"
             >
               <v-avatar class="pa-0 mx-10" size="150">
-                <img  src="../assets/back.jpg" alt="" />
+                <img :src="currentUser.user_profile_image_path + '/' + currentUser.profile_image" alt="" />
               </v-avatar>
             </v-col>
             <v-col
-            align-self="center"
-              class="pa-0  text-sm-center  text-center text-md-left"
+              align-self="center"
+              class="pa-0 text-sm-center text-center text-md-left"
               cols="12"
               xs="12"
               sm="12"
@@ -30,11 +30,11 @@
               xl="8"
               lg="8"
             >
-              <div >
+              <div>
                 <div
                   class="text-h5 text-sm-h5 text-md-h4 text-xl-h4 text-lg-h4"
                 >
-                  Muhammad Ali
+                {{currentUser.name}}
                 </div>
                 <div
                   class="
@@ -45,7 +45,7 @@
                     text-lg-subtitle1
                   "
                 >
-                  Muhammadalik619@gmail.com
+              {{currentUser.email}}
                 </div>
                 <div>
                   <v-btn v-on:click="route" class="d-inline px-0" text>
@@ -73,15 +73,24 @@ import Gallery from "../components/Gallery.vue";
 export default {
   name: "Home",
 
+  data() {
+    return {
+      currentUser: ""
+    };
+  },
   components: {
     Gallery,
     // SignUpLogin,
     AppBar,
   },
   methods: {
-route(){
-    this.$router.push({ name: "UpdateProfile" });
-}
-  }
+    route() {
+      this.$router.push({ name: "UpdateProfile" });
+    },
+  },
+  mounted() {
+    this.currentUser = JSON.parse(localStorage.getItem("currentUser"));
+    // console.log(this.currentUser);
+  },
 };
 </script>
