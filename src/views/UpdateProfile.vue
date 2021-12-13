@@ -1,3 +1,12 @@
+
+    <!-- 
+System: Image Cloud App
+Developer: Muhammad Ali
+Date: Dec 13, 2021
+Organization: Programmer Force
+Purpose: This file UpdateProfile.vue is responsible to combine ProfileSetting.vue and ResetPassword.vue components.
+ -->
+
 <template>
   <v-main>
       <AppBar/>

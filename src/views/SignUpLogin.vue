@@ -1,5 +1,13 @@
+
+    <!-- 
+System: Image Cloud App
+Developer: Muhammad Ali
+Date: Dec 13, 2021
+Organization: Programmer Force
+Purpose: This file SignUpLogin.vue is responsible to combine SignUp.vue, ForgotPassword.vue and SignIn.vue  components.
+ -->
+
 <template>
-  
     <v-main class="main blue lighten-5 align-center">
       <v-container fluid>
         <v-row>

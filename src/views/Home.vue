@@ -1,7 +1,14 @@
+
+    <!-- 
+System: Image Cloud App
+Developer: Muhammad Ali
+Date: Dec 13, 2021
+Organization: Programmer Force
+Purpose: This file Home.vue is main component where all the images will be rendered.
+ -->
 <template>
   <div>
     <AppBar />
-
     <v-card class="pa-10">
       <v-row class="mt-16">
         <v-col class="d-flex" cols="12">

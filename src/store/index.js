@@ -1,3 +1,9 @@
+/*    System: Image Cloud App
+    Developer: Muhammad Ali
+    Date: Dec 13, 2021
+    Organization: Programmer Force
+    Purpose: This file Index.js is main state management file where all the api calls will happen
+     */
 import Vue from 'vue'
 import Vuex from 'vuex'
 import axios from 'axios'

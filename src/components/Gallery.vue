@@ -186,14 +186,12 @@
 import { mapGetters } from "vuex";
 import Visibility from "../components/Visibility.vue";
 import vue2Dropzone from "vue2-dropzone";
-import skeletonLoader from "./SkeletonLoader.vue";
 import "vue2-dropzone/dist/vue2Dropzone.min.css";
 export default {
   name: "Gallery",
   components: {
     Visibility,
     vueDropzone: vue2Dropzone,
-    skeletonLoader,
   },
   data: () => ({
     imagesData: {
