@@ -1,11 +1,12 @@
 
     <!-- 
-System: E-commerce App using Dummy Api
+System: Image Cloud App
 Developer: Muhammad Ali
-Date: Dec 3, 2021
+Date: Dec 13, 2021
 Organization: Programmer Force
-Purpose: This file signUp.vue is responsible to handle all user data filled in Sign up form.
+Purpose: This file ProfileSettings.vue is responsible update the user profile data.
  -->
+
 <template>
   <v-form class="form pa-5 rounded" ref="form">
     <v-tabs class="mb-8">

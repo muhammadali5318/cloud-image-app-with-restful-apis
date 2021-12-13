@@ -1,15 +1,16 @@
-<!--
-System: E-commerce App using Dummy Api
+
+    <!-- 
+System: Image Cloud App
 Developer: Muhammad Ali
-Date: Dec 3, 2021
+Date: Dec 13, 2021
 Organization: Programmer Force
 Purpose:  this file View/SignIn.vue is responsible for user authentication and login into the system -->
+ -->
 
 
 <template>
   <v-form ref="form"  class="pa-5 rounded form">
     <div class="img-container mb-12">
-      <!-- <img src="../assets/shopify.png" alt="" /> -->
     </div>
     <h2>Login to pCloud</h2>
     <v-spacer></v-spacer>
@@ -107,34 +108,3 @@ export default {
   },
 };
 </script>
-
-<!--
-<style scoped>
-.wrapper {
-  background: url("../assets/back.jpg");
-  background-repeat: no-repeat;
-  background-position: center;
-  overflow-y: auto;
-}
-.main {
-  width: 100vw;
-  height: 100vh;
-}
-
-.form {
-  background-color: rgba(255, 255, 255, 0.9);
-}
-.group {
-  display: flex;
-  flex: 1;
-  justify-content: space-between;
-}
-.img-container {
-  width: 25%;
-}
-.img-container img {
-  width: 100%;
-}
-</style>
-
--->

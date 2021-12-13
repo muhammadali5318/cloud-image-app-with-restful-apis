@@ -1,12 +1,10 @@
 
-
-
     <!-- 
-System: E-commerce App using Dummy Api
+System: Image Cloud App
 Developer: Muhammad Ali
-Date: Dec 3, 2021
+Date: Dec 13, 2021
 Organization: Programmer Force
-Purpose: This file signUp.vue is responsible to handle all user data filled in Sign up form.
+Purpose: This file ResetPassword.vue is responsible to reset the the new password.
  -->
 
  
@@ -116,7 +114,7 @@ export default {
     },
   },
    computed: {
-     // this.$router.push({ name: "Home" });
+
         ...mapGetters(["getSnackbarStatus"]),
         ...mapGetters(["getSnackbarErrorMsg"]),
         ...mapGetters(["getSnackbarColor"]),
@@ -125,27 +123,3 @@ export default {
   mounted() {},
 };
 </script>
-
-<!--
-<style scoped>
-.wrapper {
-  background: url("../assets/back.jpg");
-  background-repeat: no-repeat;
-  background-position: center;
-  overflow-y: auto;
-}
-.main {
-  width: 100vw;
-  height: 100vh;
-}
-.form {
-  background-color: rgba(0, 0, 0, 0.993) !important;
-}
-.img-container {
-  width: 25%;
-}
-.img-container img {
-  width: 100%;
-}
-</style>
--->

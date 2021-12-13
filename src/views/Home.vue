@@ -1,6 +1,5 @@
 <template>
   <div>
-    <!-- <SignUpLogin /> -->
     <AppBar />
 
     <v-card class="pa-10">
@@ -17,7 +16,7 @@
               lg="2"
             >
               <v-avatar class="pa-0 mx-10" size="150">
-                <img :src="currentUser.user_profile_image_path + '/' + currentUser.profile_image" alt="" />
+                <img src="../assets/pro.jpg" alt="" />
               </v-avatar>
             </v-col>
             <v-col
@@ -34,7 +33,7 @@
                 <div
                   class="text-h5 text-sm-h5 text-md-h4 text-xl-h4 text-lg-h4"
                 >
-                {{currentUser.name}}
+                  Muhammad Ali
                 </div>
                 <div
                   class="
@@ -45,7 +44,7 @@
                     text-lg-subtitle1
                   "
                 >
-              {{currentUser.email}}
+                  ali@gmail.com
                 </div>
                 <div>
                   <v-btn v-on:click="route" class="d-inline px-0" text>
@@ -56,9 +55,7 @@
               </div>
             </v-col>
           </v-row>
-          <!-- <v-spacer></v-spacer> -->
         </v-col>
-        <!-- <v-spacer></v-spacer> -->
       </v-row>
     </v-card>
 
@@ -75,12 +72,11 @@ export default {
 
   data() {
     return {
-      currentUser: ""
+      currentUser: "",
     };
   },
   components: {
     Gallery,
-    // SignUpLogin,
     AppBar,
   },
   methods: {
@@ -90,7 +86,6 @@ export default {
   },
   mounted() {
     this.currentUser = JSON.parse(localStorage.getItem("currentUser"));
-    // console.log(this.currentUser);
   },
 };
 </script>

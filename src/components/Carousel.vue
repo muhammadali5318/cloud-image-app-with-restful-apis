@@ -1,13 +1,24 @@
 <template>
   <div>
-
     <v-carousel height="100vh">
       <v-carousel-item
+        style="max-width: 100%; height: 100%"
         v-for="(item, i) in getDropZoneImages"
         :key="i"
         :src="item"
-
-      ></v-carousel-item>
+      >
+        <v-btn
+          to="/Home"
+          fab
+          large
+          light
+          bottom
+          left
+          class="ma-5 v-btn--example"
+        >
+          <v-icon size="40">mdi-arrow-u-left-top-bold</v-icon>
+        </v-btn>
+      </v-carousel-item>
     </v-carousel>
   </div>
 </template>
@@ -17,27 +28,12 @@ import { mapGetters } from "vuex";
 export default {
   name: "Carousel",
   data() {
-    return {
-      items: [
-        {
-          src: "https://cdn.vuetifyjs.com/images/carousel/squirrel.jpg",
-        },
-        {
-          src: "https://cdn.vuetifyjs.com/images/carousel/sky.jpg",
-        },
-        {
-          src: "https://cdn.vuetifyjs.com/images/carousel/bird.jpg",
-        },
-        {
-          src: "https://cdn.vuetifyjs.com/images/carousel/planet.jpg",
-        },
-      ],
-    };
+    return {};
   },
-  methods:{
-      Show(){
-          console.log(this.getDropZoneImages);
-      }
+  methods: {
+    route() {
+      console.log(this.getDropZoneImages);
+    },
   },
   computed: {
     ...mapGetters(["getDropZoneImages"]),

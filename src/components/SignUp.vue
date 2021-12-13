@@ -1,16 +1,14 @@
 
     <!-- 
-System: E-commerce App using Dummy Api
+System: Image Cloud App
 Developer: Muhammad Ali
-Date: Dec 3, 2021
+Date: Dec 13, 2021
 Organization: Programmer Force
 Purpose: This file signUp.vue is responsible to handle all user data filled in Sign up form.
  -->
 <template>
   <v-form class="form pa-5 rounded" ref="form">
-    <h2>Sign Up to pCloud</h2>
-    <v-btn v-on:click="showsnack">Show snackbar</v-btn>
-              
+    <h2>Sign Up to pCloud</h2>          
     <v-spacer></v-spacer>
     <p class="grey--text text--darken-2 font-weight-light">
       One of the best Cloud Image plateform made for you
@@ -23,23 +21,6 @@ Purpose: This file signUp.vue is responsible to handle all user data filled in S
       placeholder="Full Name"
     ></v-text-field>
 
-    <!-- <v-text-field
-      v-model="userData.name.lastname"
-      append-icon="mdi-pencil-outline"
-      hint="minimum 3 characters"
-      :rules="nameRules"
-      placeholder="Last Name"
-    ></v-text-field> -->
-
-    <!-- <v-text-field
-      v-model="userData.username"
-      append-icon="mdi-account"
-      placeholder="User Name"
-      :rules="usernameRule"
-      :hint="usernameHint"
-      ref="username"
-    ></v-text-field> -->
-
     <v-text-field
       v-model="userData.email"
       placeholder="Email"
@@ -48,14 +29,6 @@ Purpose: This file signUp.vue is responsible to handle all user data filled in S
       :hint="emailHint"
       ref="email"
     ></v-text-field>
-
-    <!-- <v-text-field
-      v-model="userData.phone"
-      placeholder="Phone No"
-      append-icon="mdi-phone-plus-outline"
-      :rules="phoneNoRule"
-      ref="phoneNo"
-    ></v-text-field> -->
 
     <v-text-field
       v-model="userData.password"
@@ -79,7 +52,6 @@ Purpose: This file signUp.vue is responsible to handle all user data filled in S
       hint="Must contain 1 Small and Capital letter, 1 digit (Special Characters not allowed)"
     ></v-text-field>
 
-    <!-- ************************ Need to ask ******************************** -->
     <v-file-input
       accept="image/*"
       label="Upload Profile Picture"
@@ -108,6 +80,7 @@ Purpose: This file signUp.vue is responsible to handle all user data filled in S
     <v-btn
       class="white--text blue darken-4 pa-5 px-12"
       elevation="2"
+      :loading="getLoadingStatus"
       @click="submit"
       >Create P-cloud Id</v-btn
     >
@@ -121,7 +94,6 @@ Purpose: This file signUp.vue is responsible to handle all user data filled in S
     <v-snackbar top centered color="red" v-model="snackbar" timeout="2000">
       <span class="group">
         {{ text }}
-
         <v-icon dark right>mdi-alert-decagram </v-icon>
       </span>
     </v-snackbar>
@@ -143,8 +115,6 @@ import {
   nameRules,
   passwordRules,
 } from "../validation/validation.js";
-// import { mapState } from "vuex";
-
 export default {
   name: "SignUp",
 
@@ -189,7 +159,7 @@ export default {
       reader.readAsDataURL(event);
     },
     submit() {
-      // let validate = true;
+
       if (this.$refs.form.validate()) {
         if (this.userData.password !== this.userData.password_confirmation) {
           this.snackbar = true;
@@ -200,12 +170,10 @@ export default {
         }
       }
     },
-    showsnack(){
-      alert(this.getSignUpSnackbarStatus)
-    }
+
   },
   computed: {
-    // this.$router.push({ name: "Home" });
+
     ...mapGetters(["getSnackbarStatus"]),
     ...mapGetters(["getSnackbarErrorMsg"]),
     ...mapGetters(["getLoadingStatus"]),
@@ -217,24 +185,3 @@ export default {
 };
 </script>
 
-<style scoped>
-.wrapper {
-  /* background: url("../assets/back.jpg"); */
-  background-repeat: no-repeat;
-  background-position: center;
-  overflow-y: auto;
-}
-.main {
-  width: 100vw;
-  height: 100vh;
-}
-.form {
-  background-color: rgba(0, 0, 0, 0.993) !important;
-}
-.img-container {
-  width: 25%;
-}
-.img-container img {
-  width: 100%;
-}
-</style>

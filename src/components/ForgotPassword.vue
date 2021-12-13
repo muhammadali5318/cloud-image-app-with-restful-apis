@@ -26,7 +26,7 @@ Purpose:  this file View/SignIn.vue is responsible for user authentication and l
       ref="email"
     ></v-text-field>
 
-    <v-btn class="white--text blue darken-4 px-4" elevation="2" @click="submit"
+    <v-btn :loading="getLoadingStatus" class="white--text blue darken-4 px-4" elevation="2" @click="submit"
       >Reset</v-btn
     >
 
@@ -82,6 +82,7 @@ export default {
     ...mapGetters(["getSnackbarStatus"]),
     ...mapGetters(["getSnackbarErrorMsg"]),
     ...mapGetters(["getTesting"]),
+            ...mapGetters(["getLoadingStatus"]),
 
   },
   // computed: {

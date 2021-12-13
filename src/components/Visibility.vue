@@ -20,7 +20,7 @@
                   :key="n"
                   :label="n"
                   :value="index+1"
-                  v-on:click="show(index)"
+                  v-on:click="changeVisibility(index)"
                 ></v-radio>
               </v-radio-group>
             </v-container>
@@ -80,33 +80,21 @@ export default {
     };
   },
   methods: {
-    // need to ask
-    show(n) {
+    changeVisibility(n) {
       if (n === 0) {
         this.emailStatus = true;
         this.userData.Status = "hidden";
-        console.log(this.userData);
-        // console.log(this.radioGroup);
       } else if (n === 1) {
         this.emailStatus = true;
         this.userData.Status = "public";
-        console.log(this.userData);
-        // console.log(this.radioGroup);
       } else {
         this.userData.Status = "private";
-        // this.userData.Status = "";
         this.emailStatus = false;
-
-      }
+ }
     },
 
     submit() {
-      // let validate = true;
-      // if (this.$refs.form.validate()) {
         this.dialog = false
-      alert("saved");
-      console.log(this.userData);
-      // }
     },
   },
 
@@ -120,31 +108,6 @@ export default {
 
 .backgroundTransparent{
   background-color: transparent !important;
-  /* border: 1px solid white; */
   border: none;
-  /* border-radius: 5px; */
 }
 </style>
-<!--
-<style scoped>
-.wrapper {
-  /* background: url("../assets/back.jpg"); */
-  background-repeat: no-repeat;
-  background-position: center;
-  overflow-y: auto;
-}
-.main {
-  width: 100vw;
-  height: 100vh;
-}
-.form {
-  background-color: rgba(255, 255, 255, 0.9);
-}
-.img-container {
-  width: 25%;
-}
-.img-container img {
-  width: 100%;
-}
-</style>
--->

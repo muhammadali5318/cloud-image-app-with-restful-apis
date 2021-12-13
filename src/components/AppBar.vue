@@ -10,16 +10,13 @@ this file components/AppBar.vue is the main header main Navbar used in all the c
         @click="drawer = !drawer"
       ></v-app-bar-nav-icon>
 
-      <!-- <div style="height: 100%">
-          <v-img src="../assets/pcloud logo.png"></v-img>
-        </div> -->
       <v-toolbar-title style="cursor: pointer">
         <v-img src="../assets/logo.png" v-on:click="route('Home')"></v-img>
       </v-toolbar-title>
 
       <v-spacer></v-spacer>
 
-      <!-- *********************8 drop zone******************** -->
+      <!-- ********************* drop zone******************** -->
       <v-bottom-sheet :scrollable="true" v-model="sheet">
         <template v-slot:activator="{ on, attrs }">
           <v-btn class="text-sm-body1" light text v-bind="attrs" v-on="on">
@@ -38,7 +35,6 @@ this file components/AppBar.vue is the main header main Navbar used in all the c
             Upload
           </v-btn>
 
-
           <div>
             <vue-dropzone
               ref="myVueDropzone"
@@ -49,11 +45,7 @@ this file components/AppBar.vue is the main header main Navbar used in all the c
           </div>
         </v-sheet>
       </v-bottom-sheet>
-      <!-- *********************8 drop zone******************** -->
-      <!-- <v-btn text class="hidden-md-and-down">
-        <h2>Upload</h2>
-      </v-btn> -->
-      <!-- ***************************************** -->
+
       <div class="hidden-md-and-down text-center">
         <v-menu offset-y>
           <template v-slot:activator="{ on, attrs }">
@@ -63,7 +55,12 @@ this file components/AppBar.vue is the main header main Navbar used in all the c
             </v-btn>
           </template>
           <v-list>
-            <v-list-item v-for="(item, index) in items" :key="index">
+            <v-list-item
+              style="cursor: pointer"
+              v-for="(item, index) in items"
+              :key="index"
+              v-on:click="route(item.routeName)"
+            >
               <v-list-item-icon>
                 <v-icon v-text="item.icon"></v-icon>
               </v-list-item-icon>
@@ -89,6 +86,7 @@ this file components/AppBar.vue is the main header main Navbar used in all the c
             v-for="(item, i) in items"
             :key="i"
             @click="route(item.routeName)"
+            style="cursor: pointer"
           >
             <v-list-item-icon>
               <v-icon v-text="item.icon"></v-icon>
@@ -106,7 +104,7 @@ this file components/AppBar.vue is the main header main Navbar used in all the c
 <script>
 import vue2Dropzone from "vue2-dropzone";
 import "vue2-dropzone/dist/vue2Dropzone.min.css";
-// import { mapGetters } from "vuex";
+
 export default {
   name: "appbar",
   props: ["appbarId"],
@@ -115,15 +113,12 @@ export default {
   },
   data() {
     return {
-      // *************************** Image Data *******************************
-
-
+      // *************************** Image Data to send in API *******************************
       imagesData: {
         visibility: "Hidden",
         share_with: [],
         attachments: [],
       },
-      test: [],
 
       // ***********************************************
       path: [],
@@ -133,7 +128,7 @@ export default {
         url: "https://httpbin.org/post",
         acceptedFiles: "image/*",
         thumbnailWidth: 150,
-        maxFilesize: 4,
+        maxFilesize: 6,
         headers: { "My-Awesome-Header": "header value" },
         addRemoveLinks: true,
         dictDefaultMessage:
@@ -143,12 +138,7 @@ export default {
       drawer: null,
       selectedItem: Number(this.appbarId),
       appBarStatus: true,
-      //    items: [
-      //     { title: 'Click Me' },
-      //     { title: 'Click Me' },
-      //     { title: 'Click Me' },
-      //     { title: 'Click Me 2' },
-      //   ],
+
       items: [
         { text: "Home", icon: "mdi-home", routeName: "Home" },
         {
@@ -156,11 +146,11 @@ export default {
           icon: "mdi-account-box",
           routeName: "UpdateProfile",
         },
-        { text: "About us", icon: "mdi-information", routeName: "" },
+
         {
           text: "Logout",
           icon: "mdi-bag-checked",
-          routeName: "ProductsView",
+          routeName: "SignUpLogin",
         },
       ],
     };
@@ -174,17 +164,14 @@ export default {
       localStorage.setItem("currentUser", "");
     },
     success(file, response) {
-
       let obj = {
         image_name: "",
         base64_image: "",
       };
 
-
       obj.image_name = file.name;
       obj.base64_image = response.files.file;
       this.imagesData.attachments.push(obj);
-
       this.$store.dispatch("dropZoneImages", response.files.file);
     },
 
@@ -193,21 +180,7 @@ export default {
     },
     uploadImages() {
       alert("images Uploaded");
-      console.log(this.imagesData);
-
-      // this.$store.dispatch("postImagesData", this.imagesData);
     },
-
-  },
-
-  computed: {
- 
-  },
-  mounted() {
-    // if (localStorage.getItem("currentUser") === "") {
-    //   this.appBarStatus = false;
-    // }
-    // alert(typeof);
   },
 };
 </script>

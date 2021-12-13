@@ -1,10 +1,7 @@
 <template>
   <div class="black" >
-    <!-- <a :href="getDropZoneImages[getImageIndex]" download>
-      <v-icon> mdi-folder </v-icon>
-    </a> -->
     <v-responsive height="100vh">
-      <v-img  style="max-width: 100%; height: 100% "  :src="getDropZoneImages[getImageIndex]" contain   >
+      <v-img  style="max-width: 100%; height: 100%"  :src="getDropZoneImages[getImageIndex]" contain   >
       <a class="text-decoration-none " :href="getDropZoneImages[getImageIndex]" download>
 
         <v-btn fab large light bottom left class="ma-5 v-btn--example">
