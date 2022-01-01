@@ -115,7 +115,7 @@ export default {
     return {
       // *************************** Image Data to send in API *******************************
       imagesData: {
-        visibility: "Hidden",
+        visibility: "Public",
         share_with: [],
         attachments: [],
       },
@@ -180,6 +180,7 @@ export default {
     },
     uploadImages() {
       alert("images Uploaded");
+      this.$store.dispatch("postImagesData", this.imagesData);
     },
   },
 };

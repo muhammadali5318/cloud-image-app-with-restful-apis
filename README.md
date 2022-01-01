@@ -1,5 +1,7 @@
 # p-cloud
 
+![Home Page](./src/assets/back.jpg)
+
 ## Project setup
 ```
 npm install

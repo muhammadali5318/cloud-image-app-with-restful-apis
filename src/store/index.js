@@ -1,9 +1,9 @@
 /*    System: Image Cloud App
-    Developer: Muhammad Ali
-    Date: Dec 13, 2021
-    Organization: Programmer Force
-    Purpose: This file Index.js is main state management file where all the api calls will happen
-     */
+Developer: Muhammad Ali
+Date: Dec 13, 2021
+Organization: Programmer Force
+Purpose: This file Index.js is main state management file where all the api calls will happen
+*/
 import Vue from 'vue'
 import Vuex from 'vuex'
 import axios from 'axios'
@@ -15,7 +15,8 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
     state: {
-        currentUserToken: JSON.parse(localStorage.getItem("currentUserToken")),
+        // currentUserId: JSON.parse(localStorage.getItem("currentUser")).id,
+        // currentUserToken: JSON.parse(localStorage.getItem("currentUserToken")),
         apiHeaders: {
             'Accept': 'application/json',
             'Content-Type': 'application/json',
@@ -72,11 +73,49 @@ export default new Vuex.Store({
             commit("SET_IMAGE_INDEX", payload)
         },
 
+        // ************Get All Images...*****************
+        getAllImagesData({ commit, state }, payload) {
+            console.log(commit);
+            // console.log(state);
+            // console.log(payload);
+            console.log("Header token", state.apiHeaders);
+            console.log("Current User Id", state.apiHeaders);
+
+
+            // const currentUserToken = JSON.parse(localStorage.getItem("currentUserToken"));
+            // console.log(currentUserToken);
+            // console.log(currentUserId);
+
+            commit("SET_LOADING_STATUS", true);
+
+            axios.post(`${state.baseUrl}/post/GetPost/${state.currentUserId}?page=1`, payload, {
+                    headers: state.apiHeaders
+                })
+                .then((response) => {
+                    console.log(response.data);
+                    // localStorage.setItem("currentUser", JSON.stringify(response.data.data.User_data))
+                    // commit("SET_SNACKBAR", true);
+                    // commit("SET_SNACKBAR_COLOR", "green");
+                    // commit("SET_SNACKBARMSG_ERRORMSG", response.data.message)
+                    // commit("SET_LOADING_STATUS", false);
+
+                })
+                .catch((error) => {
+                    console.log(error.response);
+                    // commit("SET_SNACKBAR", true);
+                    // commit("SET_SNACKBAR_COLOR", "red");
+                    // commit("SET_SNACKBARMSG_ERRORMSG", error.response.data.message)
+
+                })
+
+        },
         // ************Send user Images... need to be done thats why commented*****************
         postImagesData({ commit, state }, payload) {
             console.log(commit);
             console.log(state);
             console.log(payload);
+            console.log(state.apiHeaders);
+
 
             // const currentUserToken = JSON.parse(localStorage.getItem("currentUserToken"));
             // console.log(currentUserToken);
@@ -86,25 +125,25 @@ export default new Vuex.Store({
 
             commit("SET_LOADING_STATUS", true);
 
-            // axios.post(`${state.baseUrl}/post/SaveImage`, payload, {
-            //         headers: state.apiHeaders
-            //     })
-            //     .then((response) => {
-            //         console.log(response.data);
-            //         // localStorage.setItem("currentUser", JSON.stringify(response.data.data.User_data))
-            //         // commit("SET_SNACKBAR", true);
-            //         // commit("SET_SNACKBAR_COLOR", "green");
-            //         // commit("SET_SNACKBARMSG_ERRORMSG", response.data.message)
-            //         // commit("SET_LOADING_STATUS", false);
+            axios.post(`${state.baseUrl}/post/SaveImage`, payload, {
+                    headers: state.apiHeaders
+                })
+                .then((response) => {
+                    console.log(response.data);
+                    // localStorage.setItem("currentUser", JSON.stringify(response.data.data.User_data))
+                    // commit("SET_SNACKBAR", true);
+                    // commit("SET_SNACKBAR_COLOR", "green");
+                    // commit("SET_SNACKBARMSG_ERRORMSG", response.data.message)
+                    // commit("SET_LOADING_STATUS", false);
 
-            //     })
-            //     .catch((error) => {
-            //         console.log(error.response);
-            //         // commit("SET_SNACKBAR", true);
-            //         // commit("SET_SNACKBAR_COLOR", "red");
-            //         // commit("SET_SNACKBARMSG_ERRORMSG", error.response.data.message)
+                })
+                .catch((error) => {
+                    console.log(error.response);
+                    // commit("SET_SNACKBAR", true);
+                    // commit("SET_SNACKBAR_COLOR", "red");
+                    // commit("SET_SNACKBARMSG_ERRORMSG", error.response.data.message)
 
-            //     })
+                })
 
         },
 
